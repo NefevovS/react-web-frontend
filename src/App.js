@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import TodoList from "./TodoList.js"
+import {useState} from "react";
+import Login from "./Login";
+import Logout from "./Logout";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmVmZWRvdl9zQG1haWwucnUiLCJpYXQiOjE3MTcwODIwOTJ9.e6VmFEO5-fIzUW3rxHFWpoByKEqbZPOseEb-MF74r1c"
+    const [token,setToken]=useState(undefined)
+    function acceptToken(tkn){
+        setToken(tkn)
+    }
+    return (
+   <>
+       <nav>{
+           token && <a href="/" className="brand">
+               <span>Список дел</span>
+           </a>
+       }
+           <input type="checkbox" id="bmenub" className="show"/>
+           <label htmlFor="bmenub" className="burger pseudo button">&#9776;</label>
+           <div className='menu'>{
+               token&&<Logout acceptToken={acceptToken}/>
+           }</div>
+       </nav>
+
+       {!token&&<Login acceptToken={acceptToken}/>}
+       {token&&<TodoList token={token}/>}
+       <p className="copyright">Все права принадлежат читателю книги</p>
+   </>
   );
 }
 
